@@ -19,21 +19,23 @@ refs.inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 function onInput(event){
     const inputValue = event.target.value.trim();
     if(inputValue.length === 0){
+        clearInfo();
         return;
     }
     newApiCountries.fetchCountries(inputValue)
     .then(data => {
         if(data.length > 10){
+            clearInfo();
             Notify.info('Too many matches found. Please enter a more specific query!');
             return;
         }
             else if(data.length === 1){
+                clearInfo();
                 listСountries(data);
                 listСountriesFullInfo(data);
-                console.log(data);
             }
                 else if(data.length > 1){
-                    console.log(data);
+                    clearInfo();
                     listСountries(data);
                 }
     })
@@ -48,4 +50,9 @@ function listСountries(data){
 
 function listСountriesFullInfo(data){
     refs.countryFullInfoEl.innerHTML = data.map(country => countryFullInfo(country)).join('');
+}
+
+function clearInfo(){
+    refs.countryListEl.innerHTML = '';
+    refs.countryFullInfoEl.innerHTML = '';
 }
