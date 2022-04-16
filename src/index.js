@@ -1,14 +1,17 @@
 import './css/styles.css';
+import countryFullInfo from './templates/country-full-info.hbs';
+import countryInfo from './templates/country.hbs';
 import debounce from 'lodash.debounce';
 import ApiCountries from './sass/fetchCountries.js';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const DEBOUNCE_DELAY = 300;
-
 const newApiCountries = new ApiCountries();
 
 const refs = {
     inputEl : document.querySelector('#search-box'),
+    countryListEl : document.querySelector('.country-list'),
+    countryFullInfoEl : document.querySelector('.country-info')
 }
 
 refs.inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
@@ -25,10 +28,13 @@ function onInput(event){
             return;
         }
             else if(data.length === 1){
-            console.log(data);
+                listСountries(data);
+                listСountriesFullInfo(data);
+                console.log(data);
             }
                 else if(data.length > 1){
-                console.log(data);
+                    console.log(data);
+                    listСountries(data);
                 }
     })
     .catch(error => {
@@ -36,3 +42,10 @@ function onInput(event){
     })
 }                       
 
+function listСountries(data){
+    refs.countryListEl.innerHTML = data.map(country => countryInfo(country)).join('');
+}
+
+function listСountriesFullInfo(data){
+    refs.countryFullInfoEl.innerHTML = data.map(country => countryFullInfo(country)).join('');
+}

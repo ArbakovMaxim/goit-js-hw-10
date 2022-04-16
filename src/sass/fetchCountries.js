@@ -4,6 +4,12 @@ export default class ApiCountries {
 
 fetchCountries(name){
     return fetch(`https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,flags,languages`)
-    .then(Response => Response.json())
+        .then(response =>{
+            if(response.ok){
+            return response.json()
+            }
+                Notify.failure("Oops, there is no country with that name");
+    })
+    
 }
 }
