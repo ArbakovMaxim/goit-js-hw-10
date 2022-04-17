@@ -1,7 +1,11 @@
-<ul>
-    <li>capital: {{capital}}</li>
-    <li>population: {{population}}</li>
+<div class="country">
+    <img class="country-info__item" src="{{flags.svg}}" alt="countries flag">
+    <h2>{{name.official}}</h2> 
+</div>
+<ul class="list">
+    <li><b>capital:</b> {{capital}}</li>
+    <li><b>population:</b> {{population}}</li>
     {{#each languages}}
-    <li>languages: {{this}}</li>
+    <li><b>languages:</b> {{this}}</li>
     {{/each}}
 </ul>
